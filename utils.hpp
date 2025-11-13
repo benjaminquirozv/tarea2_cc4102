@@ -145,7 +145,7 @@ inline void recorrer(Trie& trie, const std::string& rutaArchivo) {
     cout << "\n=== RESULTADOS FINALES ===\n";
     cout << "Total de caracteres escritos: " << total_escrito << "\n";
     cout << "Total de caracteres: " << total_char << "\n";
-    cout << "Porcentaje final: " << (double)total_escrito / total_char * 100 << "%\n";
+    cout << "Porcentaje final: " << (double)total_escrito / total_char * 100 << "%\n\n";
 }
 
 // Función con debug para mostrar pasos de inserción
