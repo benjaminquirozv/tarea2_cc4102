@@ -46,7 +46,7 @@ El archivo `Makefile` automatiza la compilación y ejecución.
 
 ## Para ejecutar el experimento
 Para realizar el experimento: 
-1) Sencillamente se debe clonar el repositorio con .
+1) Clonar este repositorio.
 2) Desde la raíz del directorio, simplemente ejecutar el comando `make`.
 3) Una vez compilado, se puede ejecutar el programa con: `./tarea2.exe`.
 4) Además, se añade una interfaz interactiva, la cual se puede acceder con: `./gui_app.exe`.
