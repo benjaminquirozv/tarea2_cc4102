@@ -16,13 +16,35 @@
 
 using namespace std;
 
+/**
+ * @file utils.hpp
+ * @brief Utilidades y funciones auxiliares para cargar datasets y medir rendimiento.
+ *
+ * Contiene funciones para convertir caracteres a índices del Trie, cargar
+ * archivos de palabras en el Trie y recorrer un dataset para calcular métricas
+ * de autocompletado. Está pensado como apoyo a la interfaz gráfica y pruebas.
+ */
+
+/**
+ * @brief Variante de priorización para autocompletado.
+ *
+ * - `FREQUENCY` (0): incrementa contador por cada uso de la palabra.
+ * - `RECENT` (1): asigna prioridades según un contador global para priorizar lo más reciente.
+ */
 enum Variant { FREQUENCY = 0, RECENT = 1 };
 
 // Forward declaration de Trie para evitar dependencia circular
 class Trie;
 struct TrieNode;
 
-// Función para convertir char a índice (0-25 para 'a'-'z', 26 para otros)
+/**
+ * @brief Convierta un carácter a índice para el arreglo `next` del `TrieNode`.
+ *
+ * Mapea `a`..`z` a 0..25 y cualquier otro carácter al índice 26.
+ *
+ * @param c Carácter de entrada (se asume minúscula para letras inglesas).
+ * @return Índice en rango 0..26.
+ */
 inline int charToIndex(char c) {
     if (c >= 'a' && c <= 'z') {
         return c - 'a';
@@ -30,7 +52,16 @@ inline int charToIndex(char c) {
     return 26; // índice para caracteres especiales
 }
 
-// Función simple para cargar palabras sin debug
+/**
+ * @brief Cargar un archivo de palabras en el `Trie` (modo no-verbose).
+ *
+ * Lee el archivo `rutaArchivo`, inserta cada palabra leída en `trie` y muestra
+ * información periódica sobre el progreso y tiempos. Lanza excepción si no
+ * puede abrir el archivo.
+ *
+ * @param trie Trie donde se insertan las palabras.
+ * @param rutaArchivo Ruta al archivo de palabras.
+ */
 inline void cargarArchivoPalabras(Trie& trie, const std::string& rutaArchivo) {
     std::ifstream archivo(rutaArchivo);
     
@@ -73,6 +104,16 @@ inline void cargarArchivoPalabras(Trie& trie, const std::string& rutaArchivo) {
 
 }
 
+/**
+ * @brief Recorre un dataset, inserta palabras en el Trie y calcula métricas.
+ *
+ * Calcula cuántos caracteres habría que escribir si el autocompletado
+ * funciona con la política actual del `Trie`. Actualiza prioridades a medida
+ * que encuentra palabras (simula que el usuario las acepta/usa).
+ *
+ * @param trie Trie a utilizar.
+ * @param rutaArchivo Ruta del archivo de palabras.
+ */
 inline void recorrer(Trie& trie, const std::string& rutaArchivo) {
     std::ifstream archivo(rutaArchivo);
     
@@ -148,7 +189,15 @@ inline void recorrer(Trie& trie, const std::string& rutaArchivo) {
     cout << "Porcentaje final: " << (double)total_escrito / total_char * 100 << "%\n\n";
 }
 
-// Función con debug para mostrar pasos de inserción
+/**
+ * @brief Cargar un archivo de palabras con salida de depuración paso a paso.
+ *
+ * Muestra en consola cada palabra insertada y el estado del Trie tras
+ * cada inserción. Útil para depuración y para entender cómo crecen los nodos.
+ *
+ * @param trie Trie donde se insertan las palabras.
+ * @param rutaArchivo Ruta al archivo a leer.
+ */
 inline void cargarArchivoPalabrasConDebug(Trie& trie, const std::string& rutaArchivo) {
     std::ifstream archivo(rutaArchivo);
     

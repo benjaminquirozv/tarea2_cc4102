@@ -1,5 +1,15 @@
-// Nombre: Benjamín Quiroz Villanueva
-// RUT: 20.265.703-6
+/**
+ * @file gui.cpp
+ * @brief Interfaz gráfica usando Nana para probar el autocompletado con Trie.
+ *
+ * Contiene una ventana de selección de modo/dataset y un editor con sugerencias
+ * de autocompletado. Las acciones principales son:
+ * - Inicializar un `Trie` con un dataset seleccionado.
+ * - Mostrar sugerencias basadas en el prefijo actual.
+ * - Aceptar sugerencias con TAB o actualizar/insertar palabras con ENTER.
+ *
+ * Autor: Benjamín Quiroz Villanueva (RUT: 20.265.703-6)
+ */
 
 #include <nana/gui.hpp>
 #include <nana/gui/widgets/label.hpp>
@@ -13,6 +23,15 @@
 
 using namespace nana;
 
+/**
+ * @brief Obtiene la última palabra (sin separadores) al final de un texto.
+ *
+ * Retorna una cadena vacía si no hay palabra válida. Los separadores considerados
+ * son espacio, tabulación y salto de línea.
+ *
+ * @param texto Texto a analizar.
+ * @return Última palabra encontrada o cadena vacía.
+ */
 std::string obtener_ultima_palabra(const std::string &texto) {
     if (texto.empty()) return "";
     
@@ -28,6 +47,15 @@ std::string obtener_ultima_palabra(const std::string &texto) {
     return texto.substr(start, end - start + 1);
 }
 
+/**
+ * @brief Convierte la posición del caret (columna, línea) a índice absoluto en el texto.
+ *
+ * Si la posición excede el tamaño del texto, devuelve `texto.size()`.
+ *
+ * @param cp Posición del caret como `nana::upoint` (x=columna, y=línea).
+ * @param texto Texto donde se calcula el índice.
+ * @return Índice absoluto correspondiente en `texto`.
+ */
 size_t caret_a_indice(const nana::upoint &cp, const std::string &texto) {
     size_t linea_objetivo = static_cast<size_t>(cp.y);
     size_t idx = 0;
@@ -44,6 +72,15 @@ size_t caret_a_indice(const nana::upoint &cp, const std::string &texto) {
     return idx + col;
 }
 
+/**
+ * @brief Convierte un índice absoluto en el texto a una posición de caret (columna, línea).
+ *
+ * Recorre el texto hasta `indice` contando saltos de línea para calcular línea y columna.
+ *
+ * @param indice Índice absoluto dentro de `texto`.
+ * @param texto Texto base.
+ * @return `nana::upoint` con la columna (x) y línea (y).
+ */
 nana::upoint indice_a_caret(size_t indice, const std::string &texto) {
     unsigned linea = 0;
     unsigned columna = 0;
@@ -387,3 +424,5 @@ int main() {
     
     return 0;
 }
+
+ 

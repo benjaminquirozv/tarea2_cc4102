@@ -51,3 +51,6 @@ Para realizar el experimento:
 3) Una vez compilado, se puede ejecutar el programa con: `./tarea2.exe`.
 4) Además, se añade una interfaz interactiva, la cual se puede acceder con: `./gui_app.exe`.
 5) Para limpiar los archivos generados: `make clean`
+
+## Comentarios y Documentación (Doxygen)
+Para las firmas y documentación se utilizó la IA de Copilot.
